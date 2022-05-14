@@ -6,22 +6,21 @@ export default class UserListComponent extends Component {
   constructor(props){
     super(props);
     this.state = {
-      visible: false,
-    };
-
+      show: false,
+    }
     this.hide = this.hide.bind(this);
-  }
+};
 
-  hide () {
-    this.setState({ visible: false });
-  }
+hide() {
+  this.setState ({ show : false});
+}
+
 
   render() {
     return (
      <div className='container mt-5'>
-        <Button className='btn btn-primary'
-         onClick={() => this.setState({ visible : true })}>Add</Button>
-        <FormComponent visible={this.state.visible} hide={this.hide} />
+        <Button className='btn btn-primary' onClick={() => this.setState({ show : true })}>Add</Button>
+        <FormComponent show={this.state.show} hide={this.hide} />
         { this.props.users.length > 0 ? (
           <Table>
           <thead>
