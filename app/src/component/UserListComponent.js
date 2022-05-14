@@ -20,7 +20,7 @@ hide() {
     return (
      <div className='container mt-5'>
         <Button className='btn btn-primary' onClick={() => this.setState({ show : true })}>Add</Button>
-        <FormComponent show={this.state.show} hide={this.hide} />
+        <FormComponent show={this.state.show} hide={this.hide} addUser={this.props.addUser} />
         { this.props.users.length > 0 ? (
           <Table>
           <thead>
@@ -40,9 +40,9 @@ hide() {
               <td>{user.surname}</td>
               <td>@{user.username}</td>
               <td>
-              <Button className='btn btn-warning'>Delete</Button>
+              <Button className='btn btn-warning'>Edit</Button>
             &nbsp;
-              <Button className='btn btn-danger'>Delete</Button>
+              <Button className='btn btn-danger' onClick={() => this.props.deleteUser(user)}>Delete</Button>
               </td>
             </tr>
             ))}
