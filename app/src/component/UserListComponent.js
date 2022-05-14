@@ -7,6 +7,7 @@ export default class UserListComponent extends Component {
     super(props);
     this.state = {
       show: false,
+      user: {},
     }
     this.hide = this.hide.bind(this);
 };
@@ -15,12 +16,25 @@ hide() {
   this.setState ({ show : false});
 }
 
+ getElementById(value) {
+   this.setState({
+     user: value,
+     show : true,
+   });
+ }
 
   render() {
     return (
      <div className='container mt-5'>
-        <Button className='btn btn-primary' onClick={() => this.setState({ show : true })}>Add</Button>
-        <FormComponent show={this.state.show} hide={this.hide} addUser={this.props.addUser} />
+        <Button className='btn btn-primary' onClick={() => this.setState({ user:{}, show : true })}>Add</Button>
+       { this.state.show ? (
+          <FormComponent 
+          show={this.state.show} 
+          hide={this.hide} 
+          addUser={this.props.addUser} 
+          user={this.state.user} 
+          editUser={this.props.editUser}/>
+         ) : null }
         { this.props.users.length > 0 ? (
           <Table>
           <thead>
@@ -40,7 +54,7 @@ hide() {
               <td>{user.surname}</td>
               <td>@{user.username}</td>
               <td>
-              <Button className='btn btn-warning'>Edit</Button>
+              <Button className='btn btn-warning' onClick={() => this.getElementById(user)}>Edit</Button>
             &nbsp;
               <Button className='btn btn-danger' onClick={() => this.props.deleteUser(user)}>Delete</Button>
               </td>

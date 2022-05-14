@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 
 
-
 export default class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +39,7 @@ export default class Homepage extends Component {
     }
     this.addUser = this.addUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+    this.editUser = this.editUser.bind(this);
   }
 
 
@@ -54,6 +54,7 @@ export default class Homepage extends Component {
       });
       this.setState({ users });
       toast('User Added');
+      
     }
     else {
       toast("Please Fill All Fields");
@@ -61,28 +62,49 @@ export default class Homepage extends Component {
   };
 
   deleteUser = (obj) => {
-    const users = this.state.users.filter(user=>{
+    const users = this.state.users.filter((user)=>{
       return user.id !== obj.id;
-    })
+    });
     this.setState({users});
     toast('User Deleted');
   }
 
+  editUser = (id,name,surname,username)=>{
+    if ((id,name,surname,username)) {
+      const users = [...this.state.users];
+      let updatedUser = users.map((user)=>{
+        if(user.id===id) {
+          user = {
+            id: id,
+            name: name,
+            surname: surname,
+            username: username,
+        };
+        }
+      return user;
+      });
+      this.setState({
+        users: updatedUser,
+      })
+    }
+  }
 
   render() {
     return (
-      <>
+      <div>
+      
       <ToastContainer />
         <Navbar bg="light" expand="lg">
           <Container>
             <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
           </Container>
         </Navbar>
-        <UserListComponent users={this.state.users} addUser={this.addUser} deleteUser={this.deleteUser} />
-
-      </>
-
-
+        <UserListComponent 
+        users={this.state.users}
+        addUser={this.addUser}
+        deleteUser={this.deleteUser}
+        editUser={this.editUser} />
+      </div>
     )
   }
 }
